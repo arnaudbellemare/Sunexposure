@@ -31,6 +31,7 @@ weight_lbs = 180
 height_m = height_inches * 0.0254  # Convert to meters
 weight_kg = weight_lbs * 0.453592  # Convert to kg
 bmi = weight_kg / (height_m ** 2) if height_m > 0 else 0
+med_uv1 = 425  # MED at UV 1 for Skin Type III (minutes)
 
 # Get current time and date in New York
 ny_tz = pytz.timezone('America/New_York')
@@ -52,11 +53,33 @@ uv_factor = (uv_index * 3.0) / (4.0 + uv_index)
 # Full calculation
 vitamin_d_rate = base_rate * uv_factor * clothing_factor * skin_type_factor * age_factor * quality_factor * adaptation_factor
 
+# Time to get 15,000 IU
+if vitamin_d_rate > 0:
+    time_to_15000_hours = 15000 / vitamin_d_rate
+    time_to_15000_minutes = time_to_15000_hours * 60
+else:
+    time_to_15000_minutes = float('inf')  # Avoid division by zero
+
+# Burn time calculation
+if uv_index > 0:
+    burn_time_minutes = med_uv1 / uv_index
+    safety_warning_minutes = burn_time_minutes * 0.8
+else:
+    burn_time_minutes = float('inf')
+    safety_warning_minutes = float('inf')
+
 # Display results
 st.write(f"Current New York Time: {current_time.strftime('%Y-%m-%d %I:%M %p')}")
 st.write(quality_note)
 st.write("### Calculated Vitamin D Rate")
 st.write(f"{vitamin_d_rate:.2f} IU/hour")
+
+st.write("### Time Needed for 15,000 IU")
+st.write(f"Approximately {time_to_15000_minutes:.1f} minutes of exposure.")
+
+st.write("### Time Before Burning")
+st.write(f"Technical burn time (1 MED): {burn_time_minutes:.1f} minutes.")
+st.write(f"Safety warning threshold (80% of burn time): {safety_warning_minutes:.1f} minutes.")
 
 # Winter supplement notice
 if current_month in [11, 12, 1, 2]:
