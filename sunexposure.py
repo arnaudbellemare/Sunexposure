@@ -17,6 +17,7 @@ uv_index = st.sidebar.number_input("UV Index", min_value=0.0, max_value=20.0, va
 adaptation_factor = st.sidebar.slider("Adaptation Factor (0.8 for no prior sun, up to 1.2 for regular exposure)", min_value=0.8, max_value=1.2, value=0.8, step=0.05)
 
 # Clothing options
+# Clothing options
 clothing_options = {
     "Nude (100%)": 1.0,
     "Minimal/Swimwear (80%)": 0.8,
@@ -24,8 +25,9 @@ clothing_options = {
     "Moderate/Long sleeves (15%)": 0.15,
     "Heavy/Fully covered (5%)": 0.05
 }
-selected_clothing = st.sidebar.selectbox("Clothing Factor", list(clothing_options.keys()), index=0)  # Default to Nude (1.0)
+selected_clothing = st.sidebar.selectbox("Clothing Factor", list(clothing_options.keys()), index=2)  # Default to Light/Shorts & T-shirt (40%)
 clothing_factor = clothing_options[selected_clothing]
+
 
 # Fixed parameters based on user info
 base_rate = 21000
@@ -60,7 +62,7 @@ vitamin_d_rate = base_rate * uv_factor * clothing_factor * skin_type_factor * ag
 
 # Time to get 15,000 IU
 if vitamin_d_rate > 0:
-    time_to_15000_hours = 15000 / vitamin_d_rate
+    time_to_15000_hours = 10000 / vitamin_d_rate
     time_to_15000_minutes = time_to_15000_hours * 60
 else:
     time_to_15000_minutes = float('inf')  # Avoid division by zero
