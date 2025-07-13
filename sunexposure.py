@@ -10,7 +10,7 @@ st.title("Vitamin D Synthesis Calculator")
 st.write("""
 Easy tip: Usually 5–10 min of exposure of the arms and legs or the hands, arms, and face, 2 or 3 times per week and increased dietary and supplemental vitamin D intakes during winter are reasonable approaches to guarantee vitamin D sufficiency. [](grok_render_citation_card_json={"cardIds":["c5422b","8967aa"]}) Don't stress it and enjoy the sun.
 """)
-
+st.sidebar.markdown("---")
 # Sidebar for adjustable inputs
 st.sidebar.header("Adjustable Parameters")
 uv_index = st.sidebar.number_input("UV Index", min_value=0.0, max_value=20.0, value=9.0, step=0.1)
