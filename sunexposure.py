@@ -81,7 +81,7 @@ st.write(quality_note)
 st.write("### Calculated Vitamin D Rate")
 st.write(f"{vitamin_d_rate:.2f} IU/hour")
 
-st.write("### Time Needed for 15,000 IU")
+st.write("### Time Needed for 10,000 IU")
 st.write(f"Approximately {time_to_15000_minutes:.1f} minutes of exposure.")
 
 st.write("### Time Before Burning")
